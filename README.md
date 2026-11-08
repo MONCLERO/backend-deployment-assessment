@@ -9,7 +9,7 @@ Terraform provisions a secure AWS environment, and Docker Compose runs the Go ba
 - **ALB** (internet-facing) forwarding to healthy backends, health check on `/health`
 - **Bastion Host** with an Elastic IP, the only SSH entry point to private instances
 - **2 Backend EC2 instances** (Amazon Linux 2) running Docker; user data installs Docker and Docker Compose
-- **MongoDB** in private subnets, reachable only from the backend security group
+- **MongoDB** in one private subnet, reachable only from the backend security group
 
 ### Security groups
 
