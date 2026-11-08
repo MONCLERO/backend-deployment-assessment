@@ -1,0 +1,19 @@
+# Exclude these files in the build context when building the image.
+.git
+.gitignore
+.github
+.vscode
+.idea
+
+# Secrets and local config should restricted from image
+.env
+.env.*
+!.env.example
+
+# Build output and docs that image does not need
+bin/
+tmp/
+*.md
+Dockerfile
+docker-compose*.yml
+.dockerignore

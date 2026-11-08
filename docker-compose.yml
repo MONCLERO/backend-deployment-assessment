@@ -1,0 +1,53 @@
+services:
+  backend:
+    image: monclero/much-to-do-backend:v1
+    container_name: much-to-do-backend
+    restart: unless-stopped
+    ports: 
+      - "8080:${PORT}"
+    environment:
+      PORT: "${PORT}"
+      MONGO_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongodb:27017/?authSource=admin
+      DB_NAME: "${DB_NAME}"
+      JWT_SECRET_KEY: "${JWT_SECRET_KEY}"
+      JWT_EXPIRATION_HOURS: 72
+      LOG_LEVEL: INFO
+      LOG_FORMAT: json
+      ENABLE_CACHE: "false"
+      GIN_MODE: release
+    networks: 
+      - app-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  mongodb:
+    image: mongo:7.0
+    container_name: much-to-do-mongodb
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - mongo_data:/data/db
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: "${MONGO_ROOT_USER}"
+        MONGO_INITDB_ROOT_PASSWORD: "${MONGO_ROOT_PASSWORD}"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          mongosh --quiet -u "$$MONGO_INITDB_ROOT_USERNAME" -p "$$MONGO_INITDB_ROOT_PASSWORD"
+          --authenticationDatabase admin --eval "db.adminCommand('ping').ok" | grep -q 1
+
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+networks:
+  app-network:
+    driver: bridge            
+
+volumes:
+  mongo_data:         
+  

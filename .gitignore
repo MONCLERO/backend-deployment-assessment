@@ -1,0 +1,27 @@
+# Local working files - Provider plugins
+.terraform/
+
+# Terraform state files containing sensitive data
+*.tfstate
+*.tfstate.*
+
+# Variable files with real values or secrets
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+!exported*
+
+# Key pairs for ssh access
+*.pem
+*.key
+
+# Environment variables
+.env
+.env.local
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
