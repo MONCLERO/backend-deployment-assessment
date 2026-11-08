@@ -320,7 +320,7 @@ resource "aws_instance" "backend-server" {
 resource "aws_instance" "mongodb-server" {
   ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = var.instance_type
-  subnet_id              = aws_subnet.private[count.index].id
+  subnet_id              = aws_subnet.private[0].id
   vpc_security_group_ids = [aws_security_group.mongodb.id]
   key_name               = var.key_pair_name
   depends_on             = [aws_route_table_association.private]
@@ -331,9 +331,8 @@ resource "aws_instance" "mongodb-server" {
   )
   user_data_replace_on_change = true
 
-  count = 2
   tags = {
-    Name = "${var.project_name}-mongodb-${count.index + 1}"
+    Name = "${var.project_name}-mongodb-1"
   }
 }
 
