@@ -26,6 +26,8 @@ Terraform provisions a secure AWS environment, and Docker Compose runs the Go ba
 
 AWS account and CLI (configured), Terraform, Git, Docker, Docker Compose, a Docker Hub account, an existing EC2 key pair, and the Go application repo.
 
+Application source: https://github.com/Innocent9712/much-to-do/tree/feature/backend-only
+
 ## 1. Provision Infrastructure
 
 ```bash
